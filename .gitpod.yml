@@ -1,9 +1,8 @@
-# .gitpod.yml
 tasks:
   - init: |
-      docker-compose up -d mysql redis
-      docker-compose up init
-    command: docker-compose up app
+      docker-compose pull
+  - command: |
+      docker-compose up
 
 ports:
   - port: 3000
