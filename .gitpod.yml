@@ -1,55 +1,15 @@
 tasks:
-  - name: Setup Environment
-    init: |
-      # Update package lists and install prerequisites
-      sudo apt update && sudo apt install -y \
-        python3 python3-pip ruby-full mysql-server nodejs npm build-essential
-
-      # Install Yarn globally
-      npm install -g yarn
-
-      # Install Ruby version 3.1.2 and set it as the default
-      rvm install 3.1.2
-      rvm use 3.1.2 --default
-
-      # Install Bundler for Ruby gems
-      gem install bundler
-
-      # Install Ruby gems via Bundler
-      bundle install
-
-      # Copy example config files to proper locations
-      cp config/application.example.yml config/application.yml
-      cp config/database.example.yml config/database.yml
-
-      # MySQL setup
-      echo "Setting up MySQL..."
-      sudo service mysql start  # Start MySQL service
-      mysql -e "CREATE USER 'wiki'@'localhost' IDENTIFIED BY 'wikiedu';"
-      mysql -e "CREATE DATABASE dashboard;"
-      mysql -e "GRANT ALL PRIVILEGES ON dashboard.* TO 'wiki'@'localhost';"
-      mysql -e "FLUSH PRIVILEGES;"
-
-      # Run database migrations
-      rake db:migrate
-
-      # Install JavaScript dependencies with Yarn
-      yarn install
-
-      # Build assets
-      yarn run build
-
-    command: |
-      # Start the application
-      yarn start &       # Start the Node.js app
-      bin/rails server -b 0.0.0.0  # Start the Rails server
+  - init: |
+      docker-compose up -d mysql redis
+      docker-compose up init
+    command: docker-compose up app
 
 ports:
-  - port: 3000   # Node.js app port
-    onOpen: open-preview
-  - port: 8080   # Rails server port
-    onOpen: open-preview
+  - port: 3000
+    onOpen: open-browser
+  - port: 8080
+    onOpen: ignore
 
 vscode:
   extensions:
-    - dbaeumer.vscode-eslint  # JavaScript linting
+    - ms-azuretools.vscode-docker
