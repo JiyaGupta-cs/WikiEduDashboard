@@ -11,13 +11,6 @@ ports:
   - port: 8080
     onOpen: ignore
 
-github:
-  prebuilds:
-    # Enable for the main branch
-    branches: true
-    # Enable for pull requests
-    pullRequests: true
-
 vscode:
   extensions:
     - ms-azuretools.vscode-docker
