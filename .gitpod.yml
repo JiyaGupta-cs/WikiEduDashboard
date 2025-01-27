@@ -8,6 +8,10 @@ tasks:
       # Install Yarn globally
       npm install -g yarn
 
+      # Install Ruby version 3.1.2 and set it as the default
+      rvm install 3.1.2
+      rvm use 3.1.2 --default
+
       # Install Bundler for Ruby gems
       gem install bundler
 
