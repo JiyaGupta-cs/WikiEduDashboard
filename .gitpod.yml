@@ -8,13 +8,37 @@ tasks:
       # Install Yarn globally
       npm install -g yarn
 
-      # Run the Python setup script to configure dependencies
-      python3 setup.py
+      # Install Bundler for Ruby gems
+      gem install bundler
+
+      # Install Ruby gems via Bundler
+      bundle install
+
+      # Copy example config files to proper locations
+      cp config/application.example.yml config/application.yml
+      cp config/database.example.yml config/database.yml
+
+      # MySQL setup
+      echo "Setting up MySQL..."
+      sudo service mysql start  # Start MySQL service
+      mysql -e "CREATE USER 'wiki'@'localhost' IDENTIFIED BY 'wikiedu';"
+      mysql -e "CREATE DATABASE dashboard;"
+      mysql -e "GRANT ALL PRIVILEGES ON dashboard.* TO 'wiki'@'localhost';"
+      mysql -e "FLUSH PRIVILEGES;"
+
+      # Run database migrations
+      rake db:migrate
+
+      # Install JavaScript dependencies with Yarn
+      yarn install
+
+      # Build assets
+      yarn run build
 
     command: |
       # Start the application
-      yarn start &      # Start the Node.js app
-      rails s -b 0.0.0.0  # Start the Rails server
+      yarn start &       # Start the Node.js app
+      bin/rails server -b 0.0.0.0  # Start the Rails server
 
 ports:
   - port: 3000   # Node.js app port
