@@ -1,15 +1,1 @@
-tasks:
-  - init: |
-      docker-compose up -d mysql redis
-      docker-compose up init
-    command: docker-compose up app
 
-ports:
-  - port: 3000
-    onOpen: open-browser
-  - port: 8080
-    onOpen: ignore
-
-vscode:
-  extensions:
-    - ms-azuretools.vscode-docker
