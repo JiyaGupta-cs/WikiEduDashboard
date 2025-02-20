@@ -33,6 +33,8 @@ class WikiApi
       response.body.force_encoding('UTF-8')
     when 404
       ''
+    else
+      raise PageFetchError.new(page_title, response&.status)
     end
   end
 
@@ -119,6 +121,16 @@ class WikiApi
   def too_many_requests?(e)
     return false unless e.instance_of?(MediawikiApi::HttpError)
     e.status == 429
+  end
+
+  class PageFetchError < StandardError
+    attr_reader :status
+
+    def initialize(page, status)
+      @status = status
+      message = "Failed to fetch content for #{page} with response status: #{status.inspect}"
+      super(message)
+    end
   end
 
   TYPICAL_ERRORS = [Faraday::TimeoutError,

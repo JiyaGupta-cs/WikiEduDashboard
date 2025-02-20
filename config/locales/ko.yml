@@ -754,6 +754,14 @@ ko:
         elevate_success: '%{username}님은 {position}(으)로 승격되었습니다.'
       remove:
         already_is_not: '%{username}님은 특수 사용자가 아닙니다!'
+  status:
+    daily_update: 일일 업데이트
+    default: 기본값
+    latency: 레이턴시
+    no_info: 정보가 없습니다.
+    purpose: 목적
+    size: 크기
+    status: 상태
   suggestions:
     editing: 편집 제안
     suggestion_docs:
@@ -963,6 +971,7 @@ ko:
       headline: 안녕하세요, %{username}님
       signed: '- Wiki 교육 팀'
       link: 설문 조사 참가
+    edit_survey: 설문 조사 편집
   wiki_api:
     create_account_reason: 이 사용자는 %{event}에 참여하고 있습니다.
   onboarding:
@@ -1019,4 +1028,6 @@ ko:
     cancel_edit_note: 취소
   tagged_courses:
     download_csv: CSV 다운로드
+  question_groups:
+    edit_question_group: 질문 그룹 편집
 ...
